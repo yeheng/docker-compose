@@ -1,0 +1,35 @@
+version: "3"
+services:
+
+  confluence:
+    image: atlassian/confluence-server:latest
+    container_name: confluence
+    volumes:
+      - ./data:/var/atlassian/application-data/confluence
+      - ./setenv.sh:/opt/atlassian/confluence/bin/setenv.sh
+      - ./atlassian-agent.jar:/opt/atlassian/confluence/atlassian-agent.jar
+    restart: always
+    environment:
+      ATL_JDBC_URL: jdbc:postgresql://outline-postgres:5432/confluence
+      ATL_JDBC_USER: confluence
+      ATL_JDBC_PASSWORD: confluence
+      ATL_DB_TYPE: postgresql
+      ATL_DB_DRIVER: org.postgresql.Driver
+      ATL_DB_SCHEMA_NAME: public
+      atl_tomcat_connectiontimeout: 99999
+      ATL_TOMCAT_SCHEME: https
+      ATL_TOMCAT_SECURE: "true"
+      ATL_PROXY_PORT: 443
+      ATL_PROXY_NAME: confluence.yeheng.top
+    networks:
+      - app_net
+    ports:
+     - "18010:8090"
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+
+networks:
+  app_net:
+    external: true

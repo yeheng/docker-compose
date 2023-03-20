@@ -1,0 +1,19 @@
+version: '3'
+
+services:
+  bitwarden:
+      image: vaultwarden/server:latest
+      container_name: bitwarden
+      restart: always
+      volumes:
+        - ./data:/data
+      env_file:
+        - config.env
+      ports:
+        - "3080:80"
+      networks:
+        - app_net
+
+networks:
+  app_net:
+     external: true

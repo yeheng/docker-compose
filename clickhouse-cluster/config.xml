@@ -14,7 +14,7 @@
     <listen_host>0.0.0.0</listen_host>
     <http_port>8123</http_port>
     <tcp_port>9000</tcp_port>
-    <interserver_http_host>clickhouse${REPLICA}</interserver_http_host>
+    <interserver_http_host>${IP}</interserver_http_host>
     <interserver_http_port>9009</interserver_http_port>
 
     <max_connections>4096</max_connections>
@@ -37,19 +37,19 @@
         <tzw_live_cluster>
             <shard>
                 <replica>
-                    <host>172.20.188.76</host>
+                    <host>172.23.0.11</host>
                     <port>9000</port>
                 </replica>
             </shard>
             <shard>
                 <replica>
-                    <host>172.20.188.76</host>
+                    <host>172.23.0.12</host>
                     <port>9000</port>
                 </replica>
             </shard>
             <shard>
                 <replica>
-                    <host>172.20.188.76</host>
+                    <host>172.23.0.13</host>
                     <port>9000</port>
                 </replica>
             </shard>
@@ -58,23 +58,15 @@
 
     <zookeeper>
           <node>
-            <host>172.20.188.76</host>
-            <port>2181</port>
-          </node>
-          <node>
-            <host>172.20.188.77</host>
-            <port>2181</port>
-          </node>
-          <node>
-            <host>172.20.188.78</host>
+            <host>172.23.0.10</host>
             <port>2181</port>
           </node>
     </zookeeper>
 
     <macros>
         <cluster>tzw_live_cluster</cluster>
+        <replica>${IP}</replica>
         <shard>${SHARD}</shard>
-        <replica>clickhouse${REPLICA}</replica>
     </macros>
 
     <distributed_ddl>

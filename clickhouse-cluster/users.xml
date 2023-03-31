@@ -11,6 +11,7 @@
 
     <users>
         <default>
+            <password></password>
             <profile>default</profile>
             <networks>
                 <ip>::/0</ip>
@@ -18,6 +19,7 @@
             <quota>default</quota>
         </default>
         <admin>
+            <password></password>
             <profile>default</profile>
             <networks>
                 <ip>::/0</ip>

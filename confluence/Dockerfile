@@ -1,4 +1,3 @@
-#FROM cptactionhank/atlassian-confluence:latest
 FROM atlassian/confluence-server:7.13.1-adoptopenjdk11
 
 USER root

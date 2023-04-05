@@ -14,6 +14,8 @@ services:
       - /etc/localtime:/etc/localtime:ro
       - ./data:/var/lib/postgresql/data
     restart: always
+    networks:
+      - app_net
     healthcheck:
       test: [ "CMD", "pg_isready", "-U", "postgres" ]
       interval: 3s
@@ -22,3 +24,7 @@ services:
       driver: "json-file"
       options:
         max-size: "10m"
+
+networks:
+  app_net:
+    external: true

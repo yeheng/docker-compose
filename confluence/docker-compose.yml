@@ -8,7 +8,6 @@ services:
       - ./data:/var/atlassian/application-data/confluence
       - ./setenv.sh:/opt/atlassian/confluence/bin/setenv.sh
       - ./atlassian-agent.jar:/opt/atlassian/confluence/atlassian-agent.jar
-    restart: always
     networks:
         - app_net
     environment:

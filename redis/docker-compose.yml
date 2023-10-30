@@ -2,7 +2,7 @@ version: '3.8'
 services:
    redis:
     container_name: redis
-    image: redis:7-alpine
+    image: arm64v8/redis:7-alpine
     restart: always
     networks:
         - app_net

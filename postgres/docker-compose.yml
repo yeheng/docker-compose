@@ -2,7 +2,7 @@ version: "3"
 services:
 
   postgres:
-    image: postgres:15-alpine
+    image: arm64v8/postgres:15-bullseye
     container_name: postgres
     environment:
       POSTGRES_USER: postgres

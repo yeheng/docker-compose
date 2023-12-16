@@ -1,0 +1,20 @@
+version: "3"
+services:
+  db:
+    image: ${MYSQL_IMAGE}
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: ${ROOT_PASSWORD}
+      MYSQL_ROOT_HOST: '%'
+    ports:
+      - '3306:3306'
+    expose:
+      - '3306'
+    volumes:
+      - './.mysql-data/db:/var/lib/mysql'
+    networks:
+      - app_net
+
+networks:
+   app_net:
+     external: true

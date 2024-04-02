@@ -1,15 +1,13 @@
-version: "3"
+version: "3.8"
 services:
 
   confluence:
     image: confluence:arm64-jdk11
     container_name: confluence
     volumes:
-      - ./data:/var/atlassian/application-data/confluence
-      - ./setenv.sh:/opt/atlassian/confluence/bin/setenv.sh
-      - ./atlassian-agent.jar:/opt/atlassian/confluence/atlassian-agent.jar
-    networks:
-        - app_net
+      - ${PWD}/data:/var/atlassian/application-data/confluence
+      - ${PWD}/setenv.sh:/opt/atlassian/confluence/bin/setenv.sh
+      - ${PWD}/atlassian-agent.jar:/opt/atlassian/confluence/atlassian-agent.jar
     environment:
       ATL_JDBC_URL: jdbc:postgresql://postgres:5432/confluence
       ATL_JDBC_USER: postgres
@@ -17,11 +15,6 @@ services:
       ATL_DB_TYPE: postgresql
       ATL_DB_DRIVER: org.postgresql.Driver
       ATL_DB_SCHEMA_NAME: public
-      #      atl_tomcat_connectiontimeout: 99999
-      #      ATL_TOMCAT_SCHEME: https
-      #      ATL_TOMCAT_SECURE: "true"
-      #      ATL_PROXY_PORT: 443
-      #      ATL_PROXY_NAME: confluence.yeheng.top
     ports:
      - "18010:8090"
     logging:
@@ -29,6 +22,24 @@ services:
       options:
         max-size: "10m"
 
-networks:
-  app_net:
-    external: true
+  postgres:
+    image: arm64v8/postgres:16-alpine
+    container_name: postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 123456
+      POSTGRES_DB: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - ${PWD}/localtime:/etc/localtime:ro
+      - ${PWD}/data:/var/lib/postgresql/data
+    restart: always
+    healthcheck:
+      test: [ "CMD", "pg_isready", "-U", "postgres" ]
+      interval: 3s
+      retries: 12
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"

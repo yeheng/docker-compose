@@ -1,2 +1,5 @@
-**/data
+**/data/**
+**/log/**
 .DS_Store
+**/.mysql-data
+.idea

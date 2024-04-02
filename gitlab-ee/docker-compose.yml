@@ -9,11 +9,11 @@ services:
       - "8080:80"
       - "822:822"
     volumes:
-      - ./etc:/etc/gitlab
-      - ./log:/var/log/gitlab
-      - ./data:/var/opt/gitlab
-      - ./license_key.pub:/opt/gitlab/embedded/service/gitlab-rails/.license_encryption_key.pub
-      - ./ULTIMATE_PLAN_license.rb:/opt/gitlab/embedded/service/gitlab-rails/ee/app/models/license.rb
+      - ${PWD}/etc:/etc/gitlab
+      - ${PWD}/log:/var/log/gitlab
+      - ${PWD}/data:/var/opt/gitlab
+      - ${PWD}/license_key.pub:/opt/gitlab/embedded/service/gitlab-rails/.license_encryption_key.pub
+      - ${PWD}/ULTIMATE_PLAN_license.rb:/opt/gitlab/embedded/service/gitlab-rails/ee/app/models/license.rb
 
   kroki:
     image: yuzutech/kroki

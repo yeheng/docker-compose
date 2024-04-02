@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<company>
+<clickhouse replace="true">
     <profiles>
         <default>
             <max_memory_usage>10000000000</max_memory_usage>
@@ -8,26 +8,20 @@
             <log_queries>1</log_queries>
         </default>
     </profiles>
-
     <users>
         <default>
-            <password></password>
+            <access_management>1</access_management>
             <profile>default</profile>
             <networks>
                 <ip>::/0</ip>
             </networks>
             <quota>default</quota>
+            <access_management>1</access_management>
+            <named_collection_control>1</named_collection_control>
+            <show_named_collections>1</show_named_collections>
+            <show_named_collections_secrets>1</show_named_collections_secrets>
         </default>
-        <admin>
-            <password></password>
-            <profile>default</profile>
-            <networks>
-                <ip>::/0</ip>
-            </networks>
-            <quota>default</quota>
-        </admin>
     </users>
-
     <quotas>
         <default>
             <interval>
@@ -40,4 +34,4 @@
             </interval>
         </default>
     </quotas>
-</company>
+</clickhouse>

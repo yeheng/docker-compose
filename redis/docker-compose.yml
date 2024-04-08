@@ -1,12 +1,12 @@
 version: '3.8'
+
 services:
-   redis:
-    container_name: redis
+  redis:
     image: arm64v8/redis:7-alpine
-    restart: always
-    networks:
-        - app_net
+    restart: unless-stopped
     ports:
       - '6379:6379'
     volumes:
       - ${PWD}/data:/data
+    healthcheck:
+      test: [ "CMD", "redis-cli", "--raw", "incr", "ping" ]

@@ -27,7 +27,7 @@ services:
       timeout: 10s
       retries: 3
       start_period: 10s
-    restart: always
+    restart: unless-stopped
     environment:
       - discovery.type=single-node
       - bootstrap.memory_lock=true
@@ -39,7 +39,7 @@ services:
   oap:
     image: ${OAP_IMAGE}
     container_name: oap
-    restart: always
+    restart: unless-stopped
     depends_on:
       elasticsearch:
         condition: service_healthy
@@ -64,7 +64,7 @@ services:
   ui:
     image: ${UI_IMAGE}
     container_name: ui
-    restart: always
+    restart: unless-stopped
     depends_on:
       oap:
         condition: service_healthy

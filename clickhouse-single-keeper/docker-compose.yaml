@@ -3,8 +3,7 @@ services:
   clickhouse:
     image: 'clickhouse/clickhouse-server:${CHVER}'
     user: '101:101'
-    container_name: clickhouse
-    hostname: clickhouse
+    restart: unless-stopped
     volumes:
       - ${PWD}/config.xml:/etc/clickhouse-server/config.d/config.xml
       - ${PWD}/users.xml:/etc/clickhouse-server/users.d/users.xml
@@ -18,8 +17,7 @@ services:
   clickhouse-keeper:
     image: 'clickhouse/clickhouse-keeper:${CHKVER}'
     user: '101:101'
-    container_name: clickhouse-keeper
-    hostname: clickhouse-keeper
+    restart: unless-stopped
     volumes:
       - ${PWD}/keeper_config.xml:/etc/clickhouse-keeper/keeper_config.xml
       - ${PWD}/log:/var/log/clickhouse-keeper/

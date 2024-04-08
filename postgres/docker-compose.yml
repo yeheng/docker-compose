@@ -13,7 +13,7 @@ services:
     volumes:
       - ${PWD}/localtime:/etc/localtime:ro
       - ${PWD}/data:/var/lib/postgresql/data
-    restart: always
+    restart: unless-stopped
     healthcheck:
       test: [ "CMD", "pg_isready", "-U", "postgres" ]
       interval: 3s

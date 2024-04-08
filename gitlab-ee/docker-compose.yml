@@ -3,7 +3,7 @@ services:
   gitlab-ce:
     image: gitlab/gitlab-ee:14.7.3-ee.0
     container_name: gitlab-ee
-    restart: always
+    restart: unless-stopped
     ports:
       - "8443:443"
       - "8080:80"
@@ -18,32 +18,30 @@ services:
   kroki:
     image: yuzutech/kroki
     container_name: kroki
-    restart: always
+    restart: unless-stopped
     depends_on:
       - blockdiag
       - mermaid
-#      - bpmn
+      - bpmn
       - excalidraw
     environment:
       - KROKI_BLOCKDIAG_HOST=blockdiag
       - KROKI_MERMAID_HOST=mermaid
-#      - KROKI_BPMN_HOST=bpmn
+      - KROKI_BPMN_HOST=bpmn
       - KROKI_EXCALIDRAW_HOST=excalidraw
 
   blockdiag:
     image: yuzutech/kroki-blockdiag
-    restart: always
+    restart: unless-stopped
 
   mermaid:
     image: yuzutech/kroki-mermaid
-    restart: always
+    restart: unless-stopped
 
-#  bpmn:
-#    image: yuzutech/kroki-bpmn
-#    restart: always
-#    networks:
-#      - app
+  bpmn:
+    image: yuzutech/kroki-bpmn
+    restart: unless-stopped
 
   excalidraw:
     image: yuzutech/kroki-excalidraw
-    restart: always
+    restart: unless-stopped

@@ -2,8 +2,7 @@ version: "3.8"
 services:
 
   confluence:
-    image: confluence:arm64-jdk11
-    container_name: confluence
+    image: atlassian/confluence-server:8.6-ubuntu-jdk17
     volumes:
       - ${PWD}/data:/var/atlassian/application-data/confluence
       - ${PWD}/setenv.sh:/opt/atlassian/confluence/bin/setenv.sh
@@ -16,7 +15,7 @@ services:
       ATL_DB_DRIVER: org.postgresql.Driver
       ATL_DB_SCHEMA_NAME: public
     ports:
-     - "18010:8090"
+     - "8090:8090"
     logging:
       driver: "json-file"
       options:
@@ -24,13 +23,12 @@ services:
 
   postgres:
     image: arm64v8/postgres:16-alpine
-    container_name: postgres
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: 123456
       POSTGRES_DB: postgres
     ports:
-      - "5432:5432"
+      - "5433:5432"
     volumes:
       - ${PWD}/localtime:/etc/localtime:ro
       - ${PWD}/data:/var/lib/postgresql/data

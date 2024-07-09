@@ -1,0 +1,44 @@
+services:
+  gitea:
+    image: gitea/gitea:latest-rootless
+    restart: always
+    environment:
+      - GITEA__database__DB_TYPE=postgres
+      - GITEA__database__HOST=postgres:5432
+      - GITEA__database__NAME=postgres
+      - GITEA__database__USER=postgres
+      - GITEA__database__PASSWD=123456
+    volumes:
+      - ./data:/var/lib/gitea
+      - ./config:/etc/gitea
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+    ports:
+      - "3000:80"
+      - "22:2222"
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+
+  postgres:
+    image: arm64v8/postgres:16-alpine
+    container_name: postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 123456
+      POSTGRES_DB: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - ${PWD}/localtime:/etc/localtime:ro
+      - ${PWD}/data:/var/lib/postgresql/data
+    restart: unless-stopped
+    healthcheck:
+      test: [ "CMD", "pg_isready", "-U", "postgres" ]
+      interval: 3s
+      retries: 12
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"

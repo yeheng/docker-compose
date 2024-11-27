@@ -1,8 +1,7 @@
-version: '3.8'
-services:
 
+services:
   mongodb:
-    image: mongo:6-jammy
+    image: arm64v8/mongo
     restart: unless-stopped
     ports:
       - '27017:27017'
@@ -10,3 +9,7 @@ services:
       - ${PWD}/data:/data/db
     healthcheck:
       test: echo 'db.runCommand("ping").ok' | mongosh localhost:27017/test --quiet
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"

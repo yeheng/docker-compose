@@ -1,6 +1,6 @@
 services:
   mysql:
-    image: arm64v8/mysql:8
+    image: arm64v8/mysql:9
     restart: unless-stopped
     environment:
       MYSQL_ROOT_PASSWORD: 123456
@@ -13,3 +13,9 @@ services:
       test: [ "CMD", "mysqladmin" ,"ping", "-h", "localhost" ]
       timeout: 20s
       retries: 10
+    networks:
+        - app_net
+
+networks:
+  app_net:
+    external: true

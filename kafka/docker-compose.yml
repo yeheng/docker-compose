@@ -7,6 +7,8 @@ services:
     volumes:
       - "${PWD}/data/:/bitnami"
     restart: unless-stopped
+    networks:
+      - app_net
     environment:
       # KRaft settings
       - KAFKA_CFG_NODE_ID=0
@@ -18,11 +20,25 @@ services:
       - KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP=CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT
       - KAFKA_CFG_CONTROLLER_LISTENER_NAMES=CONTROLLER
       - KAFKA_CFG_INTER_BROKER_LISTENER_NAME=PLAINTEXT
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
 
-  kafka-ui:
-    image: provectuslabs/kafka-ui:latest
-    restart: unless-stopped
-    ports:
-      - "8080:8080"
-    environment:
-      DYNAMIC_CONFIG_ENABLED: true
+  # kafka-ui:
+  #   image: provectuslabs/kafka-ui:latest
+  #   restart: unless-stopped
+  #   networks:
+  #     - app_net
+  #   ports:
+  #     - "8080:8080"
+  #   environment:
+  #     DYNAMIC_CONFIG_ENABLED: true
+  #   logging:
+  #     driver: "json-file"
+  #     options:
+  #       max-size: "10m"
+
+networks:
+  app_net:
+    external: true

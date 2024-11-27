@@ -9,3 +9,13 @@ services:
       - ${PWD}/data:/data
     healthcheck:
       test: [ "CMD", "redis-cli", "--raw", "incr", "ping" ]
+    networks:
+      - app_net
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+
+networks:
+  app_net:
+    external: true

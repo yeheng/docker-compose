@@ -1,0 +1,10 @@
+services:
+
+  openui:
+    container_name: openui
+    image: ghcr.io/wandb/openui:latest
+    ports:
+      - "7878:7878"
+    environment:
+      - OLLAMA_HOST=http://127.0.0.1:11434
+

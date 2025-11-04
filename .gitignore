@@ -2,3 +2,7 @@
 **/log/**
 .DS_Store
 .idea
+**/notebook_data
+**/surreal_data
+**/qdrant_data
+data

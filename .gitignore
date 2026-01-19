@@ -6,3 +6,4 @@
 **/surreal_data
 **/qdrant_data
 **/docker.env
+/postgres/data_bak

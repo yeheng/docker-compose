@@ -1,0 +1,23 @@
+services:
+  pihole:
+    container_name: pihole
+    image: pihole/pihole:latest
+    # For host mode networking (highly recommended for DHCP/mDNS):
+    # network_mode: "host" 
+    ports:
+      - "53:53/tcp"
+      - "53:53/udp"
+      - "67:67/udp" # Only required if using Pi-hole as a DHCP server
+      - "8081:80/tcp" # Maps local port 8080 to container's web portal
+    environment:
+      TZ: 'America/New_York' # Change to your local timezone
+      WEBPASSWORD: '123456' # Admin interface login password
+      FTLCONF_webserver_api_password: '123456'
+    volumes:
+      - './etc-pihole:/etc/pihole'
+      - './etc-dnsmasq.d:/etc/dnsmasq.d'
+    # Recommended to avoid potential runtime container crashes:
+    cap_add:
+      - NET_ADMIN 
+    restart: unless-stopped
+

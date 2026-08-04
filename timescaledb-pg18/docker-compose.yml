@@ -1,0 +1,21 @@
+services:
+  timescaledb:
+    image: timescale/timescaledb-ha:pg18
+    container_name: timescaledb_pg18
+    restart: always
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres # 请更改为您的强密码
+      - POSTGRES_DB=trading_analysis                    # 默认创建的股票数据库
+    volumes:
+      # 注意：HA 镜像的内部数据路径为 /home/postgres/pgdata/data
+      - ./data:/home/postgres/pgdata/data
+    shm_size: '512mb' # 增大共享内存，防止复杂时序查询（如股票分钟数据窗口函数聚合）时内存不足
+    command: >
+      postgres
+      -c max_connections=200
+      -c shared_buffers=256MB
+      -c work_mem=16MB
+
